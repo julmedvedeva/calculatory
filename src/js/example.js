@@ -22,7 +22,6 @@ const storage = {
   items: [],
   ul: document.querySelector('ul'),
 
-  //todo must delete
   // get val1() {
   //   return this._val1
   // },
