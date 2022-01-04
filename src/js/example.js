@@ -22,33 +22,9 @@ const storage = {
   items: [],
   ul: document.querySelector('ul'),
 
-  // get val1() {
-  //   return this._val1
-  // },
-  //
-  // get val2() {
-  //   return this._val2
-  // },
-
   valSum() {
     return +this.val1 + +this.val2
   },
-
-  // set val1(val) {
-  //   if (typeof +val === 'number' && !isNaN(val)) {
-  //     this._val1 = +val
-  //   } else {
-  //     this._val1 = 0
-  //   }
-  // },
-  //
-  // set val2(val) {
-  //   if (typeof +val === 'number' && !isNaN(val)) {
-  //     this._val2 = +val
-  //   } else {
-  //     this._val2 = 0
-  //   }
-  // },
 
   init(args) {
     this.createLoader()
