@@ -1,29 +1,36 @@
 import '../styles/index.scss';
 import json from '../data.json';
 
-const main = document.querySelector('.main');
 const container = document.querySelector('.container');
 const saveRes = document.createElement('div');
 const allResults = document.createElement('div');
 const list = document.createElement('ul');
 const result = document.querySelector('#result-div');
-const wrapperModal = document.createElement('div');
+
 const button = document.createElement('button');
-const modal = document.createElement('div');
 
 allResults.id = 'allResults';
 container.prepend(saveRes);
-main.append(allResults);
 allResults.append(list);
 
 const storage = {
   val1: 0,
   val2: 0,
   items: [],
-  ul: document.querySelector('ul'),
+  ul: document.createElement('ul'),
+  mainBlock: document.querySelector('.main'),
+
+  appendItem(parent, children) {
+    return parent.append(children);
+  },
 
   valSum() {
     return +this.val1 + +this.val2;
+  },
+
+  preinit() {
+    this.appendItem(this.mainBlock, allResults);
+    this.appendItem(this.mainBlock, this.ul);
   },
 
   init(args) {
@@ -46,13 +53,14 @@ const storage = {
       <span class='loading-text-words'>G</span>
       </div>`;
 
-    main.append(loadingDiv);
+    this.appendItem(this.mainBlock, loadingDiv);
   },
 
   deleteLoader() {
     const loadingAnimation = document.querySelector('.loading');
-    main.removeChild(loadingAnimation);
-    return this.main;
+    this.mainBlock.removeChild(loadingAnimation);
+
+    return this.mainBlock;
   },
 
   generateId() {
@@ -90,7 +98,8 @@ const storage = {
   createItem({ value, id }) {
     const item = {
       element: document.createElement('li'),
-      id: id || this.generateId().toString(),
+      id: id || this.generateId(),
+      // id: id || this.generateId().toString(),
       value: value || this.valSum(),
       button: this.generateButtonDelete(),
     };
@@ -116,12 +125,14 @@ const storage = {
       flexDirection: 'row',
       justifyContent: 'space-between',
       fontSize: '40px',
-      margin: '1%',
-      border: '1px solid blue',
+      margin: '1% 1% 1% 0',
+      border: '1px solid khaki',
       backgroundColor: 'goldenrod',
+      padding: '5px 10px',
+      borderRadius: '13px',
     });
 
-    this.items.push({ id: item.value.id, value: item.value.value });
+    this.items.push({ id: item.id, value: item.value.value });
 
     this.ul.appendChild(item.element);
   },
@@ -145,7 +156,10 @@ const storage = {
   },
 
   createModal(args) {
-    main.append(wrapperModal);
+    // main.append(wrapperModal);
+    const modal = document.createElement('div');
+    const wrapperModal = document.createElement('div');
+    this.appendItem(this.mainBlock, wrapperModal);
     button.innerText = 'Ok';
     wrapperModal.append(button, modal);
     button.addEventListener('click', (e) => {
@@ -205,15 +219,6 @@ function updateElementStyles(el, propsObj, id) {
   }
 }
 
-// async function getData(url) {
-//   try {
-//     const response = await fetch(url)
-//     return await response.json()
-//   } catch (e) {
-//     console.log(e)
-//   }
-// }
-
 storage.localStorageCustom('get', { key: 'test', entity: 'testing' });
 
 updateElementStyles(
@@ -229,11 +234,12 @@ updateElementStyles(
   'saveRes'
 );
 
-document.querySelector('#input1').addEventListener('keyup', function ({ target: { value } }) {
+document.querySelector('#input1').addEventListener('keyup', ({ target: { value } }) => {
   storage.update('val1', value);
 });
-document.querySelector('#input2').addEventListener('keyup', function ({ target: { value } }) {
+document.querySelector('#input2').addEventListener('keyup', ({ target: { value } }) => {
   storage.update('val2', value);
 });
 document.querySelector('#saveRes').addEventListener('click', () => storage.addItem(storage.valSum));
+storage.preinit();
 storage.init(json);
