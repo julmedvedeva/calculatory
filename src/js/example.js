@@ -1,9 +1,6 @@
 import '../styles/index.scss';
 import json from '../data.json';
 
-const result = document.querySelector('#result-div');
-const button = document.createElement('button');
-
 const storage = {
   val1: 0,
   val2: 0,
@@ -76,6 +73,7 @@ const storage = {
   },
 
   printCurrentResult() {
+    const result = document.querySelector('#result-div');
     result.innerHTML = `Результат сложения: ${this.valSum()}`;
   },
 
@@ -154,9 +152,10 @@ const storage = {
   },
 
   createModal(args) {
-    // main.append(wrapperModal);
     const modal = document.createElement('div');
     const wrapperModal = document.createElement('div');
+    this.appendItem(this.mainBlock, wrapperModal);
+    const button = document.createElement('button');
     this.appendItem(this.mainBlock, wrapperModal);
     button.innerText = 'Ok';
     wrapperModal.append(button, modal);
