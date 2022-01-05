@@ -1,17 +1,8 @@
 import '../styles/index.scss';
 import json from '../data.json';
 
-const container = document.querySelector('.container');
-const saveRes = document.createElement('div');
-const allResults = document.createElement('div');
-const list = document.createElement('ul');
 const result = document.querySelector('#result-div');
-
 const button = document.createElement('button');
-
-allResults.id = 'allResults';
-container.prepend(saveRes);
-allResults.append(list);
 
 const storage = {
   val1: 0,
@@ -19,9 +10,11 @@ const storage = {
   items: [],
   ul: document.createElement('ul'),
   mainBlock: document.querySelector('.main'),
+  saveRes: document.createElement('div'),
 
-  appendItem(parent, children) {
-    return parent.append(children);
+  appendItem(parent, children, method = 'append') {
+    // eslint-disable-next-line no-unused-expressions
+    method === 'prepend' ? parent.prepend(children) : parent.append(children);
   },
 
   valSum() {
@@ -29,6 +22,12 @@ const storage = {
   },
 
   preinit() {
+    const container = document.querySelector('.container');
+    const allResults = document.createElement('div');
+    const list = document.createElement('ul');
+    allResults.id = 'allResults';
+    this.appendItem(container, this.saveRes, 'prepend');
+    this.appendItem(allResults, list);
     this.appendItem(this.mainBlock, allResults);
     this.appendItem(this.mainBlock, this.ul);
   },
@@ -99,7 +98,6 @@ const storage = {
     const item = {
       element: document.createElement('li'),
       id: id || this.generateId(),
-      // id: id || this.generateId().toString(),
       value: value || this.valSum(),
       button: this.generateButtonDelete(),
     };
@@ -222,7 +220,7 @@ function updateElementStyles(el, propsObj, id) {
 storage.localStorageCustom('get', { key: 'test', entity: 'testing' });
 
 updateElementStyles(
-  saveRes,
+  storage.saveRes,
   {
     height: '100px',
     width: '100px',
@@ -234,6 +232,7 @@ updateElementStyles(
   'saveRes'
 );
 
+storage.preinit();
 document.querySelector('#input1').addEventListener('keyup', ({ target: { value } }) => {
   storage.update('val1', value);
 });
@@ -241,5 +240,4 @@ document.querySelector('#input2').addEventListener('keyup', ({ target: { value }
   storage.update('val2', value);
 });
 document.querySelector('#saveRes').addEventListener('click', () => storage.addItem(storage.valSum));
-storage.preinit();
 storage.init(json);
