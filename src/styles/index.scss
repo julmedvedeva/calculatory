@@ -10,9 +10,15 @@ body {
   padding: 10%;
   width: auto;
   background: #8496b47a;
-  //font-family: 'Caveat', cursive;
+  // font-family: 'Caveat', cursive;
   font-size: 20px;
 }
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
 .header {
   display: flex;
   flex-direction: column;
@@ -46,10 +52,10 @@ body {
 #input2 {
   margin: 5% 0 5%;
   background: linear-gradient(
-                  90deg,
-                  rgba(75, 95, 144, 0.233) 0%,
-                  rgba(196, 50, 246, 0.4948354341736695) 37%,
-                  rgba(253, 1, 52, 0.47522759103641454) 100%
+    90deg,
+    rgba(75, 95, 144, 0.233) 0%,
+    rgba(196, 50, 246, 0.4948354341736695) 37%,
+    rgba(253, 1, 52, 0.47522759103641454) 100%
   );
   box-sizing: border-box;
   border-radius: 5px;
@@ -75,14 +81,9 @@ body {
   font-size: 30px;
   border: 1px solid rgb(102, 75, 80);
   border-radius: 13px;
+  padding-left: 10px;
 }
-/* #saveRes {
-  background: rgb(34, 193, 195);
-  background: linear-gradient(0deg, rgba(34, 193, 195, 1) 0%, rgba(224, 144, 144, 1) 100%);
-  border: 1px solid grey;
-  border-radius: 5%;
-  color: white;
-} */
+
 .fas,
 .fa-backspace {
   pointer-events: none;
